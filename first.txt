@@ -1,0 +1,23 @@
+(base) ➜  ~ git:(master) ✗ cd desktop
+(base) ➜  desktop git:(main) ✗ cd cd    
+(base) ➜  cd git:(main) ✗ cd python
+cd: no such file or directory: python
+(base) ➜  cd git:(main) ✗ ls
+Java            MERN            WebFundamentals python_stack
+(base) ➜  cd git:(main) ✗ cd python_stack
+(base) ➜  python_stack git:(main) ✗ tree
+zsh: command not found: tree
+(base) ➜  python_stack git:(main) ✗ ls
+Flask           _python         django          my_environments
+(base) ➜  python_stack git:(main) ✗ cd _python
+(base) ➜  _python git:(main) ✗ ls
+OOP                 python_fundamentals
+(base) ➜  _python git:(main) ✗ cd ..
+(base) ➜  python_stack git:(main) ✗ cd django
+(base) ➜  django git:(main) ✗ ls
+django_fullstack    django_fundamentals django_orm
+(base) ➜  django git:(main) ✗ cd ..
+(base) ➜  python_stack git:(main) ✗ cd my_environments
+(base) ➜  my_environments git:(main) ✗ ls
+(base) ➜  my_environments git:(main) ✗ cd ..
+(base) ➜  python_stack git:(main) ✗ 
