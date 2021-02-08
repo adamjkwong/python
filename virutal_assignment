@@ -1,0 +1,32 @@
+pip install Django==1.11.9
+This installed django onto the virtual environment
+
+pip list
+This showed the software within the environment
+
+deactivate (This will deactivate your virtual environment)
+This "logged me out" of the environment
+
+pip3 list (How is the result different from when you ran pip list with the virtualenv activated? Hint, you should not have as many things listed when the virtualenv is deactivated. If your results are the same, go back and figure out what went wrong.)
+I believe this is the difference on what is installed int he environment versus my computer
+
+source myEnvironments/py3Env/bin/activate (Adjust the path as needed to re-activate the virtualenv; for windows call myEnvironments/py3Env/Scripts/activate)
+
+pip install Django==1.11.9 (We know you already ran this one. What information do you see returned in terminal after this command?)
+This is me asking the environment to update to a specific version of django, when even a newer version exists
+
+pip freeze (What's the difference between freeze and list?)
+I saw that the freeze was a subset. Is this only the "important" parts of the list?
+
+First cd into your Desktop directory (cd ~/Desktop), then run this command: pip freeze > requirements.txt. What do you see when you ls? What's inside this file?
+I didn't see anything
+
+pip uninstall Django
+I removed Django from my computer
+
+
+pip show Django
+I confirmed that I removed it by typing show Django before and after
+
+pip search Flask This one might take a moment to execute.
+I didn't see anything here, possibly an error?
