@@ -131,11 +131,16 @@ def ultimate_analysis(x):
 
 arr=[37,2,1,-9]
 x=[]
-
 def reverse_list(x):
-    x.reverse()
-    print(x)
+    temp = x[0]
+    for i in range(int(len(x)/2)):
+        x[i]=x[(len(x)-1)-i]
+        x[len(x)-1]=temp
+        print(x)
     return x
-
 reverse_list(arr)
 
+#def reverse_list(x):
+#    x.reverse()
+#    print(x)
+#   return x
