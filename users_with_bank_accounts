@@ -1,0 +1,53 @@
+class User:
+    def __init__(self, username, email_address, account_number):# now our method has 2 parameters!
+        self.name = username			# and we use the values passed in to set the name attribute
+        self.email = email_address		# and the email attribute
+        self.account = BankAccount(int_rate=0.01, balance=0)		# the account balance is set to $0, so no need for a third parameter
+        self.account_num = account_number
+    def make_deposit(self, add_amount, account_number):	
+        self.account.deposit(add_amount)
+        self.account_num = account_number
+        print(self.account.balance) #should this be balance or bank_balance??? 
+        return self
+    def make_withdraw(self, subtract_amount, account_number):
+        self.account.withdraw(subtract_amount)
+        self.account_num = account_number
+        print(self.account.balance) #should this be balance or bank_balance??? 
+        return self	
+    def display_user_balance(self):
+        print(f"User: {self.name}, Balance: ${self.account.balance}, Account Number: {self.account_num}")
+        return self
+    def transfer_money(self, other_user, amount):
+        self.account.balance -= amount
+        other_user.account.balance += amount
+        return self
+
+
+class BankAccount:
+    def __init__(self, int_rate=0.01, balance=0): # don't forget to add some default values for these parameters!
+        self.interest=int_rate
+        self.balance=balance
+    def deposit(self, amount):
+        self.balance += amount
+        return self
+    def withdraw(self, amount):
+        if ((self.balance - amount)<0):
+            print("Insufficient Funds: Charging a $5 Fee")
+            self.balance -= 5
+        else:
+            self.balance -= amount
+        return self
+    def display_account_info(self):
+        print(F"Account Balance: {self.balance}, Account Interest: {self.interest}")
+        return self
+    def yield_interest(self):
+        if (self.balance > 0):
+            self.balance = self.balance*(1+self.interest)
+        return self
+
+guido = User("Guido van Rossum", "guido@python.com", 151)
+monty = User("Monty Python", "monty@python.com", 1)
+monty = User("Monty Python", "monty@python.com", 2)
+
+monty.make_deposit(500,1).make_withdraw(100,1).make_withdraw(100,1).make_withdraw(100,1).make_withdraw(100,1).display_user_balance()
+monty.make_deposit(500,1).make_withdraw(100,1).make_withdraw(100,1).make_withdraw(100,1).make_withdraw(100,2).display_user_balance()
