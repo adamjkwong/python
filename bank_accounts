@@ -1,0 +1,33 @@
+
+
+
+class BankAccount:
+    def __init__(self, account_name, int_rate=0.01, balance=0): # don't forget to add some default values for these parameters!
+        self.bank_account_name=account_name
+        self.bank_interest=int_rate
+        self.bank_balance=balance
+    def deposit(self, amount):
+        self.bank_balance += amount
+        return self
+    def withdraw(self, amount):
+        if ((self.bank_balance - amount)<0):
+            print("Insufficient Funds: Charging a $5 Fee")
+            self.bank_balance -= 5
+        else:
+            self.bank_balance -= amount
+        return self
+    def display_account_info(self):
+        print(F"Account Name: {self.bank_account_name}, Account Balance: {self.bank_balance}, Account Interest: {self.bank_interest}")
+        return self
+    def yield_interest(self):
+        if (self.bank_balance > 0):
+            self.bank_balance = self.bank_balance*(1+self.bank_interest)
+            return self
+
+rocinante = BankAccount("Roci Ship", 0.01, 0)
+canterberry = BankAccount("Cant Ship", 0.01, 0)
+#rocinante.display_account_info()
+#rocinante.deposit(100).withdraw(150).display_account_info()
+
+rocinante.deposit(100).deposit(100).deposit(100).withdraw(100).yield_interest().display_account_info()
+canterberry.deposit(500).withdraw(100).withdraw(100).withdraw(100).withdraw(100).yield_interest().display_account_info()
