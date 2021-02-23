@@ -1,18 +1,14 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse
+from time import gmtime, strftime
+
+#def index(request):
+#    return HttpResponse("This is my response!")
+
 def index(request):
-    return HttpResponse("Placeholder to later display a list of all blogs with a method named index ")
-def new(request):
-    return HttpResponse("Placeholder to display a new form to create a new blog")
-def create(request):
-    return redirect("/")
-def show(request, number):
-    return HttpResponse(f"placeholder to display blog: {number}")
-def edit(request, number):
-    return HttpResponse(f"Placeholder to edit blog {number}")
-def delete(request, number):
-    return redirect("/")
-def count(request, num):
     context = {
-        "number": num
+        "time": strftime("%b %d, %Y", gmtime()),
+        "time2": strftime("%X", gmtime())
     }
-    return render(request, "count.html", context)
+    return render(request,'index.html', context)
+
+    #%Y-%m-%d %H:%M %p", 
