@@ -1,0 +1,29 @@
+(usermodels) (base) ➜  user_model_project git:(main) ✗ python manage.py makemigrations
+(usermodels) (base) ➜  user_model_project git:(main) ✗ python manage.py migrate (usermodels) (base) ➜  user_model_project git:(main) ✗ python manage.py shell 
+>>> from user_model_app.models import * 
+>>> from user_model_app.models import *
+>>> adam = User.objects.create(first_name="adam",last_name="wong",email_address="yoda@gmail.com",age=20)
+>>> adam.save()
+>>> jonathan = User.objects.create(first_name="jonathan",last_name="ta",email_address="jonathanta@gmail.com",age=30)
+>>> jonathan.save()
+>>> adrian = User.objects.create(first_name="adrian",last_name="the_boxer",email_address="the_boxer@gmail.com",age=30)
+>>> adrian.save()
+>>> all_users = User.objects.all()
+>>> all_users
+<QuerySet [<User: User object (1)>, <User: User object (2)>, <User: User object (3)>, <User: User object (4)>]>
+>>> User.objects.last()
+<User: User object (4)>
+>>> User.objects.first()
+<User: User object (1)>
+>>> c = User.objects.get(id=3)
+>>> c.last_name = "pancakes"
+>>> c.save()
+>>> c = User.objects.get(id=2)
+>>> c.delete()
+(1, {'user_model_app.User': 1})
+>>> User.objects.all().order_by("first_name")
+<QuerySet [<User: User object (1)>, <User: User object (4)>, <User: User object (3)>]>
+>>> User.objects.all().order_by("-first_name")
+<QuerySet [<User: User object (3)>, <User: User object (4)>, <User: User object (1)>]>
+>>> all_users
+<QuerySet [<User: User object (1)>, <User: User object (3)>, <User: User object (4)>]>
