@@ -1,0 +1,69 @@
+>>> from ninja_dojo_app.models import Dojo, Ninja
+>>> Ninja.objects.all()
+>>> dojo_1 = Dojo.objects.create(name="Fridojo", city="San Francisco", state="California")
+>>> dojo_2 = Dojo.objects.create(name="sandojo", city="San Jose", state="California")
+>>> dojo_3 = Dojo.objects.create(name="hondojo", city="Honolulu", state="Hawaii")
+>>> Dojo.objects.all()
+<QuerySet [<Dojo: Dojo object (2)>, <Dojo: Dojo object (3)>, <Dojo: Dojo object (4)>]>
+>>> c = Dojo.objects.get(id=2)
+>>> c.delete()
+(1, {'ninja_dojo_app.Ninja': 0, 'ninja_dojo_app.Dojo': 1})
+>>> c = Dojo.objects.get(id=3)
+>>> c.delete()
+(1, {'ninja_dojo_app.Ninja': 0, 'ninja_dojo_app.Dojo': 1})
+>>> c = Dojo.objects.get(id=4)
+>>> c.delete()
+(1, {'ninja_dojo_app.Ninja': 0, 'ninja_dojo_app.Dojo': 1})
+>>> ojo_1 = Dojo.objects.create(name="Fridojo_2", city="San Francisco", state="California")
+>>> ojo_2 = Dojo.objects.create(name="sandojo_2", city="San Jose", state="California")
+>>> ojo_3 = Dojo.objects.create(name="hondojo_2", city="Honolulu", state="Hawaii")
+>>> ninja_1 = Ninja.objects.create(dojo_id=ojo_2, first_name="ninja", last_name="kid")
+>>> ninja_2 = Ninja.objects.create(dojo_id=ojo_2, first_name="samurai", last_name="jack")
+>>> ninja_3 = Ninja.objects.create(dojo_id=ojo_2, first_name="warrior", last_name="dren")
+
+>>> for ninja in ojo_2.ninjas.all():
+...     print(ninja.first_name)
+... 
+ninja
+samurai
+warrior
+>>> ninja_4 = Ninja.objects.create(dojo_id=ojo_3, first_name="le", last_name="ninjatta")
+>>> ninja_5 = Ninja.objects.create(dojo_id=ojo_3, first_name="super", last_name="ninjar")
+>>> ninja_6 = Ninja.objects.create(dojo_id=ojo_3, first_name="powerful", last_name="elemental")
+>>> for ninja in ojo_3.ninjas.all():
+...     print(ninja.first_name)
+... 
+le
+super
+powerful
+>>> Dojo.objects.all().values()
+<QuerySet [{'id': 5, 'name': 'Fridojo_2', 'city': 'San Francisco', 'state': 'California', 'created_at': datetime.datetime(2021, 3, 7, 0, 36, 3, 784279, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 3, 7, 0, 36, 3, 784308, tzinfo=<UTC>)}, {'id': 6, 'name': 'sandojo_2', 'city': 'San Jose', 'state': 'California', 'created_at': datetime.datetime(2021, 3, 7, 0, 36, 22, 827236, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 3, 7, 0, 36, 22, 827264, tzinfo=<UTC>)}, {'id': 7, 'name': 'hondojo_2', 'city': 'Honolulu', 'state': 'Hawaii', 'created_at': datetime.datetime(2021, 3, 7, 0, 36, 33, 430830, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 3, 7, 0, 36, 33, 430857, tzinfo=<UTC>)}]>
+>>> Ninja.objects.all().values()
+<QuerySet [{'id': 3, 'dojo_id_id': 6, 'first_name': 'ninja', 'last_name': 'kid', 'created_at': datetime.datetime(2021, 3, 7, 0, 37, 28, 360181, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 3, 7, 0, 37, 28, 360210, tzinfo=<UTC>)}, {'id': 5, 'dojo_id_id': 6, 'first_name': 'warrior', 'last_name': 'dren', 'created_at': datetime.datetime(2021, 3, 7, 0, 37, 55, 588306, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 3, 7, 0, 37, 55, 588335, tzinfo=<UTC>)}, {'id': 6, 'dojo_id_id': 6, 'first_name': 'ninja', 'last_name': 'kid', 'created_at': datetime.datetime(2021, 3, 7, 0, 41, 36, 416692, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 3, 7, 0, 41, 36, 416723, tzinfo=<UTC>)}, {'id': 7, 'dojo_id_id': 7, 'first_name': 'le', 'last_name': 'ninjatta', 'created_at': datetime.datetime(2021, 3, 7, 0, 42, 55, 977800, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 3, 7, 0, 42, 55, 977829, tzinfo=<UTC>)}, {'id': 8, 'dojo_id_id': 7, 'first_name': 'super', 'last_name': 'ninjar', 'created_at': datetime.datetime(2021, 3, 7, 0, 43, 9, 134083, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 3, 7, 0, 43, 9, 134111, tzinfo=<UTC>)}, {'id': 9, 'dojo_id_id': 7, 'first_name': 'powerful', 'last_name': 'elemental', 'created_at': datetime.datetime(2021, 3, 7, 0, 43, 26, 458021, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 3, 7, 0, 43, 26, 458050, tzinfo=<UTC>)}]>>>> Ninja.objects.filter(dojo_id="6")
+<QuerySet [<Ninja: Ninja object (3)>, <Ninja: Ninja object (5)>, <Ninja: Ninja object (6)>]>
+>>> Ninja.objects.filter(dojo_id="7")
+<QuerySet [<Ninja: Ninja object (7)>, <Ninja: Ninja object (8)>, <Ninja: Ninja object (9)>]>
+>>> Ninja.objects.filter(dojo_id="8")
+<QuerySet []>
+>>> Ninja.objects.filter(dojo_id=Dojo.objects.get(id=6))
+<QuerySet [<Ninja: Ninja object (3)>, <Ninja: Ninja object (5)>, <Ninja: Ninja object (6)>]>
+>>> Ninja.objects.filter(dojo_id=Dojo.objects.get(id=7))
+<QuerySet [<Ninja: Ninja object (7)>, <Ninja: Ninja object (8)>, <Ninja: Ninja object (9)>]>
+>>> Ninja.objects.last().dojo_id
+<Dojo: Dojo object (7)>
+(ninja_and_dojo) (base) ➜  ninjadojo_project git:(main) ✗ python manage.py makemigrations
+Migrations for 'ninja_dojo_app':
+  ninja_dojo_app/migrations/0002_dojo_desc.py
+    - Add field desc to dojo
+(ninja_and_dojo) (base) ➜  ninjadojo_project git:(main) ✗ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, ninja_dojo_app, sessions
+Running migrations:
+  Applying ninja_dojo_app.0002_dojo_desc... OK
+(ninja_and_dojo) (base) ➜  ninjadojo_project git:(main) ✗ python manage.py shell
+Python 3.8.5 (default, Sep  4 2020, 02:22:02) 
+[Clang 10.0.0 ] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from ninja_dojo_app.models import *
+>>> dojo_4 = Dojo.objects.create(name="aladojo", city="Anchorage", state="Alaksa")
