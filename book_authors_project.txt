@@ -1,0 +1,96 @@
+(book_authors) (base) ➜  book_authors_project git:(main) ✗ python manage.py makemigrations
+Migrations for 'book_authors_app':
+  book_authors_app/migrations/0002_auto_20210308_0025.py
+    - Remove field author_id from author
+    - Remove field book_id from book
+    - Add field books to author
+    - Delete model Book_author
+(book_authors) (base) ➜  book_authors_project git:(main) ✗ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, book_authors_app, contenttypes, sessions
+Running migrations:
+  Applying book_authors_app.0002_auto_20210308_0025... OK
+(book_authors) (base) ➜  book_authors_project git:(main) ✗ python manage.py shell
+Python 3.8.5 (default, Sep  4 2020, 02:22:02) 
+[Clang 10.0.0 ] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+
+>>> from book_authors_app.models import Book, Author
+>>> first_book = Book.objects.create(title="C Sharp",desc="A book about programming for language in title")
+>>> second_book = Book.objects.create(title="Java",desc="A book about programming for language in title")
+>>> third_book = Book.objects.create(title="Python",desc="A book about programming for language in title")
+>>> fourth_book = Book.objects.create(title="PHP",desc="A book about programming for language in title")
+>>> fifth_book = Book.objects.create(title="Ruby",desc="A book about programming for language in title")
+>>> first_author = Author.objects.create(first_name="Jane",last_name="Austen")
+>>> second_author = Author.objects.create(first_name="Emily",last_name="Dickinson")
+>>> third_author = Author.objects.create(first_name="Fyodor",last_name="Dostoevsky")
+>>> fourth_author = Author.objects.create(first_name="William",last_name="Shakespeare")
+>>> fifth_author = Author.objects.create(first_name="Lau",last_name="Tzu")
+(book_authors) (base) ➜  book_authors_project git:(main) ✗ python manage.py makemigrations
+Migrations for 'book_authors_app':
+  book_authors_app/migrations/0003_author_notes.py
+    - Add field notes to author
+(book_authors) (base) ➜  book_authors_project git:(main) ✗ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, book_authors_app, contenttypes, sessions
+Running migrations:
+  Applying book_authors_app.0003_author_notes... OK
+>>> from book_authors_app.models import Book, Author
+>>> Book.objects.first()
+<Book: Book object (1)>
+>>> Book.objects.filter(title="C Sharp")
+<QuerySet [<Book: Book object (1)>]>
+>>> book_to_update = Book.objects.get(id=1)
+>>> book_to_update.title = "C#"
+>>> book_to_update.save()
+>>> author_to_update = Author.objects.get(id=4)
+>>> author_to_update.first_name = "Bill"
+>>> Author.objects.first().books.add(Book.objects.first())
+>>> Author.objects.first().books.add(Book.objects.get(id=2))
+>>> Author.objects.get(id=2).books.add(Book.objects.get(id=1))
+>>> Author.objects.get(id=2).books.add(Book.objects.get(id=2))
+>>> Author.objects.get(id=2).books.add(Book.objects.get(id=3))
+>>> Author.objects.get(id=3).books.add(Book.objects.get(id=1))
+>>> Author.objects.get(id=3).books.add(Book.objects.get(id=2))
+>>> Author.objects.get(id=3).books.add(Book.objects.get(id=3))
+>>> Author.objects.get(id=3).books.add(Book.objects.get(id=4))
+>>> Author.objects.get(id=4).books.add(Book.objects.get(id=1))
+>>> Author.objects.get(id=4).books.add(Book.objects.get(id=2))
+>>> Author.objects.get(id=4).books.add(Book.objects.get(id=3))
+>>> Author.objects.get(id=4).books.add(Book.objects.get(id=4))
+>>> Author.objects.get(id=4).books.add(Book.objects.get(id=5))
+>>> for i in Book.objects.get(id=3).authors.all():
+...     print(i.first_name)
+... 
+Emily
+Fyodor
+William
+>>> Author.objects.filter(first_name="Emily")
+<QuerySet [<Author: Author object (2)>]>
+>>> Author.objects.get(id=2).__dict__
+{'_state': <django.db.models.base.ModelState object at 0x7fa4a1558b50>, 'id': 2, 'first_name': 'Emily', 'last_name': 'Dickinson', 'notes': '0000000', 'created_at': datetime.datetime(2021, 3, 8, 0, 31, 25, 968482, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 3, 8, 0, 31, 25, 968556, tzinfo=<UTC>)}
+>>> Author.objects.get(id=2).values()
+>>> Book.objects.get(id=3).__dict__
+{'_state': <django.db.models.base.ModelState object at 0x7fa4a14f0430>, 'id': 3, 'title': 'Python', 'desc': 'A book about programming for language in title', 'created_at': datetime.datetime(2021, 3, 8, 0, 30, 6, 586643, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 3, 8, 0, 30, 6, 586697, tzinfo=<UTC>)}
+#disassociating the 3rd book and the 2nd author
+>>> this_book = Book.objects.get(id=3)
+>>> this_author = Author.objects.get(id=2)
+>>> this_author.books.remove(this_book)
+>>> this_book.authors.remove(this_author)
+#associating the 2nd book and the 5th author
+>>> this_book = Book.objects.get(id=2)
+>>> this_author = Author.objects.get(id=5)
+>>> this_author.books.add(this_book)
+>>> this_book.authors.add(this_author)
+>>> for i in Author.objects.get(id=3).books.all():
+...     print(i.title)
+... 
+C#
+Java
+Python
+PHP
+>>> for i in Book.objects.get(id=5).authors.all():
+...     print(i.first_name)
+... 
+William
